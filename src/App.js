@@ -4,6 +4,7 @@ import "./App.css";
 import Card from "./components/Card";
 import Loading from './components/Loading';
 import Navigation from './components/Navigation';
+import Data from './data/data.json';
 
 // Initial class component where initial state is created via a constructor
 class App extends Component {
@@ -12,20 +13,21 @@ class App extends Component {
     this.state = {
       toggleLogo: true,
       loading: true,
-      cards: [
-        { id: 0, animation: "card" },
-        { id: 1, animation: "card" },
-        { id: 2, animation: "card" },
-        { id: 3, animation: "card" },
-        { id: 4, animation: "card" },
-        { id: 5, animation: "card" }
-      ]
+      cards: []
     };
     // Bind method, binds the this keyword to the function that is calling it
     this.toggleLogo = this.toggleLogo.bind(this);
-    this.clickCard = this.clickCard.bind(this);
+    this.showBack = this.showBack.bind(this);
+    this.showFront = this.showFront.bind(this);
     this.openNav = this.openNav.bind(this);
     this.closeNav = this.closeNav.bind(this);
+  }
+
+  // ComponentWillMount
+  componentWillMount() {
+    this.setState({
+      cards: data, 
+    });
   }
 
   // ComponentDidMount
@@ -39,14 +41,29 @@ class App extends Component {
       toggleLogo: !prevState.toggleLogo
     }));
   }
-  clickCard(card) {
-    let cards = this.state.cards;
-    cards[card.id].animation = "card animated zoomOut";
-    console.log(cards);
 
-    this.setState({
-      cards
-    });
+  showBack(card) {
+    clickCard(card) {
+      let cards = this.state.cards;
+      cards[card.id].animation = "card card-flip";
+      console.log(cards);
+  
+      this.setState({
+        cards
+      });
+    }
+  }
+
+  showFront(card) {
+    clickCard(card) {
+      let cards = this.state.cards;
+      cards[card.id].animation = "card";
+      console.log(cards);
+  
+      this.setState({
+        cards
+      });
+    }
   }
 
   openNav() {
@@ -77,13 +94,14 @@ class App extends Component {
         </header>
         {
           this.state.loading ? <Loading /> : 
-          <div className="Grid">
+          <div className="Grid animated bounceInUp">
           {this.state.cards.map(card => (
             <Card
               duration={150}
               key={card.id}
               card={card}
-              clickCard={this.clickCard}
+              showBack={this.showBack}
+              showFront={this.showFront}
             />
           ))}
         }
