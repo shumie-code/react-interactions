@@ -4,14 +4,15 @@ import "./Card.css";
 const Card = props => (
   <div className={props.card.animation}>
     <div className="front" onClick={() => props.showBack(props.card)}>
-      <img src="juice.jpg" alt="Vitamin Juice" className="card-image" />
+      <img src="juice.jpg" alt="Avatar" className="card-image" />
       <div className="container">
         <h3>
           Vitamin Juice <span className="price">$24.99</span>
         </h3>
         <p>
-          Get some vitamins in your daily beverages, skip the pills, get better
-          now! Available in several flavors
+          Need a jump on your vitamins while drinking? Tired of popping the
+          pills? Drink our vitamin enhanced juice, available in several
+          flavours.
         </p>
       </div>
     </div>
