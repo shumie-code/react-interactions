@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import logo from "./logo.png";
 import "./App.css";
 import Card from "./components/Card";
+import Loading from './components/Loading';
+import Navigation from './components/Navigation';
+
 // Initial class component where initial state is created via a constructor
 class App extends Component {
   constructor(props) {
@@ -21,10 +24,14 @@ class App extends Component {
     // Bind method, binds the this keyword to the function that is calling it
     this.toggleLogo = this.toggleLogo.bind(this);
     this.clickCard = this.clickCard.bind(this);
+    this.openNav = this.openNav.bind(this);
+    this.closeNav = this.closeNav.bind(this);
   }
 
   // ComponentDidMount
-  
+  componentDidMount() {
+    setTimeout(() => this.setState({ loading: false}), 3000);
+  }
   // ToggleLogo function passes event that uses conditional rendering of prev state to
   // determine the current state
   toggleLogo(event) {
@@ -42,6 +49,14 @@ class App extends Component {
     });
   }
 
+  openNav() {
+    document.getElementById("myNav").style.width = "100%";
+  }
+
+  closeNav() {
+    document.getElementById("myNav").style.width = "0%";
+  }
+
   render() {
     return (
       <div className="App">
@@ -56,10 +71,13 @@ class App extends Component {
             alt="logo"
             onMouseEnter={this.toggleLogo}
             onMouseLeave={this.toggleLogo}
+            onClick={this.openNav}
           />
-          <h1 className="App-title">Welcome to React</h1>
+         <Navigation closeNav={this.closeNav} />
         </header>
-        <div className="Grid">
+        {
+          this.state.loading ? <Loading /> : 
+          <div className="Grid">
           {this.state.cards.map(card => (
             <Card
               duration={150}
@@ -68,7 +86,9 @@ class App extends Component {
               clickCard={this.clickCard}
             />
           ))}
+        }
         </div>
+        }
       </div>
     );
   }

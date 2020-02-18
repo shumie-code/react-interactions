@@ -23,6 +23,7 @@ html, body {
 
 .static-logo {
   height: 80px;
+  cursor: pointer;
 }
 
 .App-header {
